@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 
 namespace DocumentIO
@@ -7,25 +7,28 @@ namespace DocumentIO
     {
         static void Main(string[] args)
         {
+            public StreamWriter(string path, bool append, System.Text.Encoding encoding);
             try
             {
                 Console.WriteLine("Document" + " ");
                 Console.WriteLine("What is the name of the document?");
                 String name = Console.ReadLine();
-                FileStream F = new FileStream(name + ".txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                String fileName = (name + ".txt");
+                Console.WriteLine("What information would you like to put into the document?");
+                String input = Console.ReadLine();
+                using (StreamWriter writer = new StreamWriter(fileName, true, Encoding.UTF8))
+                {
+                    writer.Write(input);
+                }
+                FileStream fs = new FileStream(input, FileMode.Append);
+                System.IO.File.WriteAllText(input);
+                Console.WriteLine(".txt was a successfully saved. The document contains");
+                System.Environment.Exit(1);
+                /*FileStream F = new FileStream(name + ".txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);*/
             }
             catch (System.IO.IOException)
             {
                 Console.WriteLine("The file can not be opened or created.");
-                System.Environment.Exit(1);
-            }
-            finally
-            {
-                Console.WriteLine("What information would you like to put into the document?");
-                String input = Console.ReadLine();
-                FileStream fs = new FileStream(input, FileMode.Append);
-                System.IO.File.WriteAllText(input);
-                Console.WriteLine(".txt was a successfully saved. The document contains");
                 System.Environment.Exit(1);
             }
 
